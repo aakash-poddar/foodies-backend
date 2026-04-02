@@ -18,6 +18,7 @@ public class JwtUtil {
     @Value("${jwt.secret.key}")
     private String SECRET_KEY;
 
+
     public String generateToken(UserDetails userDetails){
         Map<String, Objects> claims = new HashMap<>();
         return createToken(claims,userDetails.getUsername());
