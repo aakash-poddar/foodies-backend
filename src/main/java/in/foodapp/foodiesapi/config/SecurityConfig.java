@@ -75,14 +75,31 @@ public class SecurityConfig {
     }
 
 
-    @Bean
-    public AuthenticationManager authenticationManager(){
-        DaoAuthenticationProvider authProvider =new DaoAuthenticationProvider(userDetailsService);
+//    @Bean
+//    public AuthenticationManager authenticationManager(){
+//       DaoAuthenticationProvider authProvider =new DaoAuthenticationProvider(userDetailsService);
+//
+////        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+////
+////        authProvider.setUserDetailsPasswordService(userDetailsService); // MUST
+////        authProvider.setPasswordEncoder(passwordEncoder());     // MUST
+//
+////        return new ProviderManager(authProvider);
+//
+//        //=====Remove this part setUserDetailsService() =======
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//        return  new ProviderManager(authProvider);
+//
+//    }
 
-        //=====Remove this part setUserDetailsService() =======
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return  new ProviderManager(authProvider);
+@Bean
+public AuthenticationManager authenticationManager(AppUserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
 
-    }
+    DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+
+    authProvider.setPasswordEncoder(passwordEncoder);
+
+    return new ProviderManager(authProvider);
+}
 
 }
